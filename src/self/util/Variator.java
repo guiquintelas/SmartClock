@@ -56,7 +56,7 @@ public class Variator {
 		if (ticks == 0) {
 			isFadeIn = false;
 			numero.setNumero(max);
-		//	executarAçao();
+		//	executarAï¿½ao();
 			return;
 		}
 		numero.setNumero(inicio);
@@ -71,7 +71,7 @@ public class Variator {
 		if (ticks == 0) {
 			isFadeIn = false;
 			numero.setNumero(max);
-			//executarAçao();
+			//executarAï¿½ao();
 			return;
 		}
 		numero.setNumero(inicio);
@@ -90,7 +90,7 @@ public class Variator {
 		if (ticks == 0) {
 			isFadeOut = false;
 			numero.setNumero(min);
-			executarAçao();
+			execeutarAcao();
 			return;
 		}
 		numero.setNumero(inicio);
@@ -110,7 +110,7 @@ public class Variator {
 		if (ticks == 0) {
 			isFadeOut = false;
 			numero.setNumero(min);
-			executarAçao();
+			execeutarAcao();
 			return;
 		}
 		numero.setNumero(inicio);
@@ -130,7 +130,7 @@ public class Variator {
 				isFadeIn = false;
 				isVariando = false;
 				isSin = false;
-				executarAçao();
+				execeutarAcao();
 			}
 		}
 	}
@@ -145,17 +145,17 @@ public class Variator {
 				isFadeOut = false;
 				isVariando = false;
 				isSin = false;
-				executarAçao();
+				execeutarAcao();
 			}
 		}
 	}
 	
-	public void oscilar(double off, int ticks, boolean começarBaixo) {
+	public void oscilar(double off, int ticks, boolean comecarBaixo) {
 		if (isFadeIn || isFadeOut || isOscilando || isEsperando) return;
 		if (ticks == 0 || off == 0) return; 		
 		
 		isOscilando = true;
-		if (começarBaixo) {
+		if (comecarBaixo) {
 			aux = 180;
 		} else {
 			aux = 0;
@@ -186,7 +186,7 @@ public class Variator {
 		checaOscilando();
 		checaVariando();
 		checaEsperando();
-		if (!isFadeIn && !isOscilando && !isFadeOut && !isEsperando) executarAçao();
+		if (!isFadeIn && !isOscilando && !isFadeOut && !isEsperando) execeutarAcao();
 	}
 	
 	private void checaEsperando() {
@@ -237,7 +237,7 @@ public class Variator {
 				isOscilandoPronto = true;
 				numeroVar = fadeOutMin;
 				vezesOscilando++;
-				executarAçao();
+				execeutarAcao();
 			}
 			
 		}
@@ -275,7 +275,7 @@ public class Variator {
 		todosVariator.remove(this);
 	}
 	
-	private void executarAçao() {
+	private void execeutarAcao() {
 		if (filaActions.size() > 0) {
 			if (filaActions.get(0).action()) {
 				filaActions.remove(0);
