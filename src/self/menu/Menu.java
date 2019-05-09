@@ -97,8 +97,8 @@ public class Menu {
 	private static Botao botaoStop;
 	private static Botao botaoReset;
 	
-	private static final BufferedImage imgPlay = Util.carregarImg("/play.png");
-	private static final BufferedImage imgPause = Util.carregarImg("/pause.png");
+	private static final BufferedImage imgPlay = Util.carregarImg("/imgs/play.png");
+	private static final BufferedImage imgPause = Util.carregarImg("/imgs/pause.png");
 
 	public static void init() {
 		timer1 = new Timer();

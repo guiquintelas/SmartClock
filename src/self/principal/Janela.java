@@ -56,7 +56,7 @@ public class Janela extends JFrame {
 		setResizable(false);
 		setLayout(null);
 		setTitle(titulo);
-		setIconImage(Util.carregarImg("/clockicon.png"));
+		setIconImage(Util.carregarImg("/imgs/clockicon.png"));
 		setContentPane(telas);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setAlwaysOnTop(true);

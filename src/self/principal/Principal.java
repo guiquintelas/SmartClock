@@ -102,7 +102,7 @@ public class Principal implements Runnable {
 
 	public static void main(String[] args) {
 		ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-		InputStream is = classloader.getResourceAsStream("DS-DIGII.TTF");
+		InputStream is = classloader.getResourceAsStream("fonts/DS-DIGII.TTF");
 		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();	
 		try {
 			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, is));
