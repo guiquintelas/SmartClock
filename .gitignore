@@ -13,6 +13,7 @@ local.properties
 build.xml
 manifest.mf
 .classpath
+*.iml
 
 # External tool builders
 .externalToolBuilders/
