@@ -29,8 +29,11 @@ public class Timer {
 	
 	public Timer(int h, int m, int s) {
 		horas = h;
+		horasT = h;
 		min = m;
+		minT = m;
 		seg = s;
+		segT = s;
 
 		funcao = DESLIGAR;
 	}

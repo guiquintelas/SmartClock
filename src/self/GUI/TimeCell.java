@@ -47,119 +47,102 @@ public class TimeCell {
 	}
 
 	private void initListeners() {
-		ListenerManager.addListener(new MouseWheelListener() {
-			public void acao(MouseWheelEvent e) {
-				if (!sel) return;
-				switch (tipo) {
-					case HORAS:
-						Menu.timers.get(Menu.timerSel).rodaHora(e.getWheelRotation());
-						break;
+		ListenerManager.addListener(e -> {
+			if (!sel) return;
+			switch (tipo) {
+				case HORAS:
+					Menu.timers.get(Menu.timerSel).rodaHora(e.getWheelRotation());
+					break;
 
-					case MINUTOS:
-						Menu.timers.get(Menu.timerSel).rodaMin(e.getWheelRotation());
-						break;
+				case MINUTOS:
+					Menu.timers.get(Menu.timerSel).rodaMin(e.getWheelRotation());
+					break;
 
-					case SEGUNDOS:
-						Menu.timers.get(Menu.timerSel).rodaSeg(e.getWheelRotation());
-						break;
+				case SEGUNDOS:
+					Menu.timers.get(Menu.timerSel).rodaSeg(e.getWheelRotation());
+					break;
 
-					default:
-						System.err.println("Time sel com tipo errado");
-						break;
-				}
-
+				default:
+					System.err.println("Time sel com tipo errado");
+					break;
 			}
+
 		});
 
-		ListenerManager.addListener(ListenerManager.MOUSE_PRESSED, new MouseListener() {
-			public void acao(MouseEvent e) {
-				if (e.getX() > x && e.getX() < x + width) {
-					if (e.getY() > y && e.getY() < y + height) {
-						if (!sel) sel = true;
-					} else {
-						sel = false;
-					}
+		ListenerManager.addListener(ListenerManager.MOUSE_PRESSED, (MouseListener) e -> {
+			if (e.getX() > x && e.getX() < x + width) {
+				if (e.getY() > y && e.getY() < y + height) {
+					if (!sel) sel = true;
 				} else {
 					sel = false;
 				}
-
+			} else {
+				sel = false;
 			}
+
 		});
 		
-		ListenerManager.addListener(ListenerManager.KEY_PRESSED, new KeyListener() {
-			public void acao(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-					sel = false;
-				}
-				
-				if (e.getKeyCode() == KeyEvent.VK_H && tipo == HORAS) {
-					sel = true;
-					
-				} else 	if (e.getKeyCode() == KeyEvent.VK_M && tipo == MINUTOS) {
-					sel = true;
-					
-				} else 	if (e.getKeyCode() == KeyEvent.VK_S && tipo == SEGUNDOS) {
-					sel = true;
-					
-				} else if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_M || e.getKeyCode() == KeyEvent.VK_H){
-					sel = false;
-				}
+		ListenerManager.addListener(ListenerManager.KEY_PRESSED, (KeyListener) e -> {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+				sel = false;
+			}
+
+			if (e.getKeyCode() == KeyEvent.VK_H && tipo == HORAS) {
+				sel = true;
+
+			} else 	if (e.getKeyCode() == KeyEvent.VK_M && tipo == MINUTOS) {
+				sel = true;
+
+			} else 	if (e.getKeyCode() == KeyEvent.VK_S && tipo == SEGUNDOS) {
+				sel = true;
+
+			} else if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_M || e.getKeyCode() == KeyEvent.VK_H){
+				sel = false;
 			}
 		});
 
-		ListenerManager.addListener(ListenerManager.KEY_TYPED, new KeyListener() {
-			public void acao(KeyEvent e) {
-				if (!sel) return;
-				
+		ListenerManager.addListener(ListenerManager.KEY_TYPED, (KeyListener) e -> {
+			if (!sel) return;
 
-				String key = "";
-				char keyc = e.getKeyChar();
+			String key = "";
+			char keyc = e.getKeyChar();
 
-				
-				try {
-					int keyi = Integer.parseInt(Character.toString(keyc));
-					
-					if (keyi < 0 || keyi > 9) return;
-					key = keyi + "";
-				} catch (Exception e2) {}
-				
-				
-				if (key == "") return;
-				
-				if (tipo == HORAS) {
-					char pnum = Menu.timers.get(Menu.timerSel).getHorasTemp().charAt(1);
-					if (Integer.parseInt(Character.toString(pnum)) > 2) pnum = '2';
-					Menu.timers.get(Menu.timerSel).setHoras(Integer.parseInt(pnum + key));		
-					System.out.println(key);
-				}
-				
-				if (tipo == MINUTOS) {
-					char pnum = Menu.timers.get(Menu.timerSel).getMinTemp().charAt(1);
-					if (Integer.parseInt(Character.toString(pnum)) > 5) pnum = '5';
-					Menu.timers.get(Menu.timerSel).setMin(Integer.parseInt(pnum + key));				
-				}
-				
-				if (tipo == SEGUNDOS) {
-					char pnum = Menu.timers.get(Menu.timerSel).getSegTemp().charAt(1);
-					if (Integer.parseInt(Character.toString(pnum)) > 5) pnum = '5';
-					Menu.timers.get(Menu.timerSel).setSeg(Integer.parseInt(pnum + key));				
-				}
-				
+
+			try {
+				int keyi = Integer.parseInt(Character.toString(keyc));
+
+				if (keyi < 0 || keyi > 9) return;
+				key = keyi + "";
+			} catch (Exception ignored) {}
+
+
+			if (key.equals("")) return;
+
+			if (tipo == HORAS) {
+				char pnum = Menu.timers.get(Menu.timerSel).getHorasTemp().charAt(1);
+				if (Integer.parseInt(Character.toString(pnum)) > 2) pnum = '2';
+				Menu.timers.get(Menu.timerSel).setHoras(Integer.parseInt(pnum + key));
+				System.out.println(key);
 			}
+
+			if (tipo == MINUTOS) {
+				char pnum = Menu.timers.get(Menu.timerSel).getMinTemp().charAt(1);
+				if (Integer.parseInt(Character.toString(pnum)) > 5) pnum = '5';
+				Menu.timers.get(Menu.timerSel).setMin(Integer.parseInt(pnum + key));
+			}
+
+			if (tipo == SEGUNDOS) {
+				char pnum = Menu.timers.get(Menu.timerSel).getSegTemp().charAt(1);
+				if (Integer.parseInt(Character.toString(pnum)) > 5) pnum = '5';
+				Menu.timers.get(Menu.timerSel).setSeg(Integer.parseInt(pnum + key));
+			}
+
 		});
 
 	}
 
 	public int getX() {
 		return x;
-	}
-
-	public int getY() {
-		return y;
-	}
-	
-	public boolean isSel() {
-		return sel;
 	}
 
 	public void pintar(Graphics2D g) {
