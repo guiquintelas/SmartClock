@@ -5,10 +5,7 @@ import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Font;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,24 +21,21 @@ import self.principal.Janela;
 import self.principal.Principal;
 import self.principal.Tela;
 import self.principal.Timer;
-import self.util.ActionQueue;
 import self.util.Util;
 import self.util.Variator;
 import self.util.VariatorNumero;
 
 public class Menu {
 
-	private static Timer timer1;
-	private static Timer timer2;
-	public static HashMap<Integer, Timer> timers = new HashMap<Integer, Timer>();
+	public static HashMap<Integer, Timer> timers = new HashMap<>();
 
 	public static Font fontOpcoes = new Font("DS-Digital", Font.PLAIN, 13);
-	public static Font fontOpcoesG = new Font("DS-Digital", Font.PLAIN, 15);
-	public static Font fontTimerB = new Font("DS-Digital", Font.PLAIN, 30);
+	private static Font fontOpcoesG = new Font("DS-Digital", Font.PLAIN, 15);
+	private static Font fontTimerB = new Font("DS-Digital", Font.PLAIN, 30);
 
-	public static final Color corPadraoClara = new Color(100, 100, 100);
+	private static final Color corPadraoClara = new Color(100, 100, 100);
 	public static final Color corPadrao = new Color(60, 60, 60);
-	public static final Color corPadraoEscura = new Color(40, 40, 40);
+	private static final Color corPadraoEscura = new Color(40, 40, 40);
 	public static final Color corSel = new Color(255, 215, 0);
 	public static final Color corSel1 = new Color(155, 115, 0);
 
@@ -60,7 +54,7 @@ public class Menu {
 	private static CheckBox reiniciar;
 	private static CheckBox desligar;
 
-	private static ArrayList<CheckBox> checkBoxes = new ArrayList<CheckBox>();
+	private static ArrayList<CheckBox> checkBoxes = new ArrayList<>();
 
 	private static final int widthTimeCell = 30;
 	private static final int heightTimeCell = 23;
@@ -101,8 +95,8 @@ public class Menu {
 	private static final BufferedImage imgPause = Util.carregarImg("/imgs/pause.png");
 
 	public static void init() {
-		timer1 = new Timer();
-		timer2 = new Timer();
+		Timer timer1 = new Timer(0, 22, 0);
+		Timer timer2 = new Timer();
 
 		timers.put(1, timer1);
 		timers.put(2, timer2);
@@ -116,42 +110,31 @@ public class Menu {
 		new HoverArea(xT12, yT1, widthT12, heightT12, 7).setAlphaMax(60);
 		new HoverArea(xT12, yT2, widthT12, heightT12, 7).setAlphaMax(60);
 		
-		botaoSync = new Botao(xT12 + 10, Janela.HEIGHT + Tela.BORDA, 55, heightMT - Tela.BORDA*2, corPadrao, corPadraoEscura, "SYNC" , 9, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Principal.relogio.sync();
-				
-			}
-		});
+		botaoSync = new Botao(xT12 + 10, Janela.HEIGHT + Tela.BORDA, 55, heightMT - Tela.BORDA*2, corPadrao, corPadraoEscura, "SYNC" , 9,
+				e -> Principal.relogio.sync());
 		
-		botaoOk = new Botao(xOk, ySMH, widthTimeCell+1, heightTimeCell+1, corSel1, corPadrao, "OK", -4, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {			
-				if (timers.get(timerSel).salvar()) {
-					botaoOk.setAtivo(false);				
-				}
+		botaoOk = new Botao(xOk, ySMH, widthTimeCell+1, heightTimeCell+1, corSel1, corPadrao, "OK", -4, e -> {
+			if (timers.get(timerSel).salvar()) {
+				botaoOk.setAtivo(false);
 			}
 		});
 		botaoOk.setFont(TimeCell.font);
 		botaoOk.ha.setAlphaMax(60);
 		botaoOk.setAtivo(false);
-		
-		botaoStop = new Botao(botaoSync.getX() + botaoSync.getWidth() + 6, botaoSync.getY(), 40, botaoSync.getHeight(), botaoSync.getCorBorda(), botaoSync.getCorFundo(), "", 9, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Principal.relogio.stopGo();
-				
-				if (Principal.relogio.isParado()) {
-					botaoStop.setImg(imgPlay);
-				} else {
-					botaoStop.setImg(imgPause);
-				}
+
+		botaoStop = new Botao(botaoSync.getX() + botaoSync.getWidth() + 6, botaoSync.getY(), 40, botaoSync.getHeight(), botaoSync.getCorBorda(), botaoSync.getCorFundo(), "", 9, e -> {
+			Principal.relogio.stopGo();
+
+			if (Principal.relogio.isParado()) {
+				botaoStop.setImg(imgPlay);
+			} else {
+				botaoStop.setImg(imgPause);
 			}
 		});
 		botaoStop.setImg(imgPause);
 		
-		botaoReset = new Botao(botaoStop.getX() + botaoStop.getWidth() + 6, botaoStop.getY(), 55, botaoStop.getHeight(), botaoStop.getCorBorda(), botaoStop.getCorFundo(), "RESET", 9, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {	
-				Principal.relogio.reset();
-			}
-		});
+		botaoReset = new Botao(botaoStop.getX() + botaoStop.getWidth() + 6, botaoStop.getY(), 55, botaoStop.getHeight(), botaoStop.getCorBorda(), botaoStop.getCorFundo(), "RESET", 9,
+				e -> Principal.relogio.reset());
 
 		initListener();
 		initVariator();
@@ -159,29 +142,13 @@ public class Menu {
 	}
 	
 	private static void initCheckBox() {
-		especial = new CheckBox(Janela.WIDTH - 25, yT1 + 16, 10, KeyEvent.VK_E, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timers.get(timerSel).setFuncao(Timer.ESPECIAL);
-			}
-		});
+		especial = new CheckBox(Janela.WIDTH - 25, yT1 + 16, 10, KeyEvent.VK_E, e -> timers.get(timerSel).setFuncao(Timer.ESPECIAL));
 		especial.setGrupo(1);
-		suspender = new CheckBox(Janela.WIDTH - 25, yT1 + 31, 10, KeyEvent.VK_U, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timers.get(timerSel).setFuncao(Timer.SUSPENDER);
-			}
-		});
+		suspender = new CheckBox(Janela.WIDTH - 25, yT1 + 31, 10, KeyEvent.VK_U, e -> timers.get(timerSel).setFuncao(Timer.SUSPENDER));
 		suspender.setGrupo(1);
-		reiniciar = new CheckBox(Janela.WIDTH - 25, yT1 + 46, 10, KeyEvent.VK_R, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timers.get(timerSel).setFuncao(Timer.REINICIAR);
-			}
-		});
+		reiniciar = new CheckBox(Janela.WIDTH - 25, yT1 + 46, 10, KeyEvent.VK_R, e -> timers.get(timerSel).setFuncao(Timer.REINICIAR));
 		reiniciar.setGrupo(1);
-		desligar = new CheckBox(Janela.WIDTH - 25, yT1 + 61, 10, KeyEvent.VK_D, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				timers.get(timerSel).setFuncao(Timer.DESLIGAR);
-			}
-		});
+		desligar = new CheckBox(Janela.WIDTH - 25, yT1 + 61, 10, KeyEvent.VK_D, e -> timers.get(timerSel).setFuncao(Timer.DESLIGAR));
 		desligar.setGrupo(1);
 
 		checkBoxes.add(especial);
@@ -189,6 +156,17 @@ public class Menu {
 		checkBoxes.add(reiniciar);
 		checkBoxes.add(desligar);
 		
+		setCheckboxes();
+	}
+	
+	private static void setCheckboxes() {
+		for (CheckBox checkBox : checkBoxes) {
+			checkBox.setCheck(false);
+		}
+		
+		if (timers.get(timerSel).funcao != 0) {
+			checkBoxes.get(timers.get(timerSel).funcao - 1).setCheck(true, false);
+		}
 	}
 
 	private static void initVariator() {
@@ -244,54 +222,39 @@ public class Menu {
 	}
 
 	private static void initListener() {
-		ListenerManager.addListener(ListenerManager.MOUSE_PRESSED, new MouseListener() {
-			public void acao(MouseEvent e) {
+		ListenerManager.addListener(ListenerManager.MOUSE_PRESSED, (MouseListener) e -> {
 
-				if (e.getX() > xT12 && e.getX() < xT12 + widthT12) {
-					if (e.getY() > yT1 && e.getY() < yT1 + heightT12) {
-						if (timerSel != 1) {
-							timers.get(timerSel).cancelar();
-							timerSel = 1;
+			if (e.getX() > xT12 && e.getX() < xT12 + widthT12) {
+				if (e.getY() > yT1 && e.getY() < yT1 + heightT12) {
+					if (timerSel != 1) {
+						timers.get(timerSel).cancelar();
+						timerSel = 1;
 
-							for (int x = 0; x < checkBoxes.size(); x++) {
-								checkBoxes.get(x).setCheck(false);
-
-							}
-							if (timers.get(timerSel).funcao != 0) checkBoxes.get(timers.get(timerSel).funcao - 1).setCheck(true);
-						}
-
-						return;
+						setCheckboxes();
 					}
+
+					return;
 				}
-
-				if (e.getX() > xT12 && e.getX() < xT12 + widthT12) {
-					if (e.getY() > yT2 && e.getY() < yT2 + heightT12) {
-						if (timerSel != 2) {
-							timers.get(timerSel).cancelar();
-							timerSel = 2;
-
-							for (int x = 0; x < checkBoxes.size(); x++) {
-								checkBoxes.get(x).setCheck(false);
-
-							}
-							if (timers.get(timerSel).funcao != 0) checkBoxes.get(timers.get(timerSel).funcao - 1).setCheck(true);
-						}
-
-						return;
-					}
-				}
-
 			}
+
+			if (e.getX() > xT12 && e.getX() < xT12 + widthT12) {
+				if (e.getY() > yT2 && e.getY() < yT2 + heightT12) {
+					if (timerSel != 2) {
+						timers.get(timerSel).cancelar();
+						timerSel = 2;
+
+						setCheckboxes();
+					}
+				}
+			}
+
 		});
 		
-		ListenerManager.addListener(ListenerManager.KEY_PRESSED, new KeyListener() {
-			public void acao(KeyEvent e) {
-				
-				if (e.getKeyCode() == KeyEvent.VK_ENTER && !timers.get(timerSel).isSalvo() && aberto && timers.get(timerSel).funcaoT != 0) {
-					timers.get(timerSel).salvar();
-				}
-				
+		ListenerManager.addListener(ListenerManager.KEY_PRESSED, (KeyListener) e -> {
+			if (e.getKeyCode() == KeyEvent.VK_ENTER && !timers.get(timerSel).isSalvo() && aberto && timers.get(timerSel).funcaoT != 0) {
+				timers.get(timerSel).salvar();
 			}
+
 		});
 	}
 
@@ -308,12 +271,10 @@ public class Menu {
 		sizeVar.fadeInSin(height, Janela.MENU_HEIGHT, espera);
 		sizeVar.variar(true);
 		ani = true;
-		sizeVar.addAcaoNaFila(new ActionQueue() {
-			public boolean action() {
-				ani = false;
-				System.out.println("abriu");
-				return true;
-			}
+		sizeVar.addAcaoNaFila(() -> {
+			ani = false;
+			System.out.println("abriu");
+			return true;
 		});
 
 		separadorVar.variar(false);
@@ -336,14 +297,12 @@ public class Menu {
 		sizeVar.fadeOutSin(height, 0, espera);
 		sizeVar.variar(true);
 		ani = true;
-		sizeVar.addAcaoNaFila(new ActionQueue() {
-			public boolean action() {
-				ani = false;
-				aberto = false;
-				System.out.println("fechou");
-				// diminuirTela();
-				return true;
-			}
+		sizeVar.addAcaoNaFila(() -> {
+			ani = false;
+			aberto = false;
+			System.out.println("fechou");
+			// diminuirTela();
+			return true;
 		});
 
 		separadorVar.variar(false);
@@ -357,11 +316,12 @@ public class Menu {
 
 	public static void update() {
 		updateBotaoOk();
-		
-		
 	}
 
 	private static void updateBotaoOk() {
+		if (!aberto)
+			return;
+
 		if (!timers.get(timerSel).isSalvo() && timers.get(timerSel).funcaoT != 0) {
 			botaoOk.setAtivo(true);
 		} else {
@@ -375,12 +335,8 @@ public class Menu {
 		g.setColor(Color.DARK_GRAY);
 		g.drawLine(Janela.WIDTH / 2 - divWidth / 2, Janela.HEIGHT - 5, Janela.WIDTH / 2 + divWidth / 2, Janela.HEIGHT - 5);
 
-		//g.setColor(corPadrao);
-		//g.drawRoundRect(Tela.BORDA + 5, Janela.HEIGHT, 40, Janela.MENU_HEIGHT - Tela.BORDA - 5, 5, 5);
-
 		pintarBotoesTimer(g);
 		pintarTimeDisplay(g);
-		//pintarBotaoOk(g);
 		pintarOpcoes(g);
 		
 		botaoSync.pintar(g);
@@ -395,9 +351,6 @@ public class Menu {
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, menuHeight + Janela.HEIGHT, Janela.WIDTH, Janela.HEIGHT + Janela.MENU_HEIGHT - menuHeight);
 		g.setComposite(comp);
-		
-		
-
 	}
 
 	private static void pintarOpcoes(Graphics2D g) {

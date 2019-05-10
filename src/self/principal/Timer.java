@@ -23,15 +23,27 @@ public class Timer {
 	public static final int SUSPENDER = 2;
 	public static final int ESPECIAL = 1;
 	
-	public int getHoras() {
+	public Timer() {
+		
+	}
+	
+	public Timer(int h, int m, int s) {
+		horas = h;
+		min = m;
+		seg = s;
+
+		funcao = DESLIGAR;
+	}
+	
+	int getHoras() {
 		return horas;
 	}
 	
-	public int getMin() {
+	int getMin() {
 		return min;
 	}
 	
-	public int getSeg() {
+	int getSeg() {
 		return seg;
 	}
 	
@@ -102,7 +114,7 @@ public class Timer {
 		salvo = false;
 	}
 	
-	public void executar() throws IOException {
+	void executar() throws IOException {
 		switch (funcao) {
 		case DESLIGAR:
 			Runtime.getRuntime().exec("shutdown -s -t 0");

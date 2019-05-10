@@ -63,10 +63,10 @@ public class CheckBox {
 			public void acao(MouseEvent e) {
 				if (e.getX() > x && e.getX() < x + size) {
 					if (e.getY() > y && e.getY() < y + size) {
-						if (check) return;
+						if (check) 
+							return;
 						
 						setCheck(true);
-						
 					}
 				}
 				
@@ -77,9 +77,7 @@ public class CheckBox {
 			public void acao(KeyEvent e) {
 				if (e.getKeyCode() == CheckBox.this.hotkey) {
 					setCheck(true);
-					
 				}
-				
 			}
 		});
 		
@@ -220,13 +218,17 @@ public class CheckBox {
 		
 		
 	}
-	
+
 	public void setCheck(boolean check) {
-		
+		setCheck(check, true);
+	}
+	
+	public void setCheck(boolean check, boolean triggerAction) {
 		if (check) {
 			if (this.check) return;
-			
-			al.actionPerformed(null);
+
+			if (triggerAction)
+				al.actionPerformed(null);
 			
 			for (int x = 0; x < todasCheckBox.size(); x++) {
 				CheckBox cbAtual = todasCheckBox.get(x);
@@ -270,8 +272,6 @@ public class CheckBox {
 	}
 	
 	public void pintar(Graphics2D g) {
-		
-		
 		if (!check) {
 			if (aniAtiva) {
 				g.setColor(new Color(r,this.g,b));
