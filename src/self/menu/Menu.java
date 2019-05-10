@@ -80,7 +80,7 @@ public class Menu {
 
 	private static final int ySMH = Janela.HEIGHT + Janela.MENU_HEIGHT - heightTimeCell - Tela.BORDA - div;
 
-	private static final float DELAY_MENU = Janela.MENU_HEIGHT / 50f;
+	private static final float DELAY_MENU = Janela.MENU_HEIGHT / 20f;
 	public static final int DIVISOR_WIDTH_MAX = Janela.WIDTH - Tela.BORDA * 2 - 20;
 
 	private static TimeCell timeCellHoras;
@@ -222,6 +222,14 @@ public class Menu {
 
 		alphaVar = new Variator(new VariatorNumero() {
 			public void setNumero(double numero) {
+				if (numero < 0) {
+					numero = 0;
+				}
+				
+				if (numero > 1) {
+					numero = 1;
+				}
+				
 				alpha = (float) numero;
 			}
 

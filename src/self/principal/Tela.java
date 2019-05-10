@@ -22,21 +22,19 @@ import self.util.VariatorNumero;
 
 @SuppressWarnings("serial")
 public class Tela extends JPanel {
-	public BufferedImage buffer = new BufferedImage(Janela.WIDTH, Janela.HEIGHT + Janela.MENU_HEIGHT,
-			BufferedImage.TYPE_INT_ARGB);
+	public BufferedImage buffer = new BufferedImage(Janela.WIDTH, Janela.HEIGHT + Janela.MENU_HEIGHT, BufferedImage.TYPE_INT_ARGB);
 	public static Graphics2D g;
 
 	private Font font = new Font("DS-Digital", Font.PLAIN, 50);
 	private Relogio relogio;
 
 	public static final int BORDA = 3;
-	
+
 	public static boolean aniInit = true;
 	public boolean aniInitTempo = false;
 
-	private float alpha = 0;	
-	
-	
+	private float alpha = 0;
+
 	private static Variator alphaVar;
 
 	public void init(Relogio relogio) {
@@ -54,8 +52,6 @@ public class Tela extends JPanel {
 		g.setFont(font);
 		repaint();
 
-		
-
 		alphaVar = new Variator(new VariatorNumero() {
 			public void setNumero(double numero) {
 				if (numero < 0) numero = 0;
@@ -69,10 +65,10 @@ public class Tela extends JPanel {
 			}
 
 			public boolean devoContinuar() {
-				return  aniInit || aniInitTempo;
+				return aniInit || aniInitTempo;
 			}
 		});
-		
+
 		alphaVar.fadeInSin(0, 1, 35);
 		alphaVar.variar(true);
 		alphaVar.addAcaoNaFila(new ActionQueue() {
@@ -85,7 +81,7 @@ public class Tela extends JPanel {
 				return true;
 			}
 		});
-		
+
 		alphaVar.addAcaoNaFila(new ActionQueue() {
 			public boolean action() {
 				aniInitTempo = false;
@@ -115,9 +111,7 @@ public class Tela extends JPanel {
 		} else {
 			g2.drawImage(buffer, 0, 0, this);
 		}
-		
-		
-		
+
 		Principal.pintar = false;
 
 		repaint();
@@ -130,44 +124,38 @@ public class Tela extends JPanel {
 		getGrafico().setComposite(comp);
 
 		getGrafico().setColor(Color.BLACK);
-		getGrafico().fillRoundRect(BORDA, BORDA, getWidth() - BORDA * 2, Janela.HEIGHT + Menu.height - BORDA * 2, 15,15);
+		getGrafico().fillRoundRect(BORDA, BORDA, getWidth() - BORDA * 2, Janela.HEIGHT + Menu.height - BORDA * 2, 15, 15);
 
-		if(!aniInitTempo && !aniInit) {
+		if (!aniInitTempo && !aniInit) {
 			pintarTempo();
-		} else if(aniInitTempo){
-			int rand = Util.randomInt(0, 20 + (int)(alpha * 80));
+		} else if (aniInitTempo) {
+			int rand = Util.randomInt(0, 20 + (int) (alpha * 80));
 			if (rand > 4) {
 				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 				pintarTempo();
 				g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 			}
-			
+
 		}
-		
+
 		pintarBotao();
 		Menu.pintar(getGrafico(), Menu.height);
 		Especial.pintar(g);
 		pintarHoverArea(g);
-	
 
 		getGrafico().setColor(Color.DARK_GRAY);
 		Util.paintRectOcoRound(g, 0, 0, Janela.WIDTH, Janela.HEIGHT + Menu.height, BORDA, 20);
 
 	}
 
-	
-
 	private void pintarHoverArea(Graphics2D g) {
-		for (int x = 0; x < HoverArea.todosHoverArea.size(); x ++) {
+		for (int x = 0; x < HoverArea.todosHoverArea.size(); x++) {
 			HoverArea.todosHoverArea.get(x).pintar(g);
 		}
-		
+
 	}
 
 	private void pintarBotao() {
-		getGrafico().setColor(Color.WHITE);
-
-
 		getGrafico().setColor(Color.WHITE);
 		getGrafico().setFont(new Font("arial", Font.PLAIN, 12));
 		getGrafico().drawString("x", Janela.WIDTH - 11, 11);
