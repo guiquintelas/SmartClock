@@ -15,17 +15,16 @@ import self.util.Variator;
 
 public class Principal implements Runnable {
 
-	public boolean rodando = true;
 	public static Relogio relogio;
 	public static Janela janela;
-	public Tela tela;
-	public static ListenerManager listener;
+	private Tela tela;
+	private static ListenerManager listener;
 	
 	public static boolean pintar = false;
 	
 	public static int tickTotal = 1;
 
-	public Principal() {
+	private Principal() {
 		relogio = new Relogio();
 		janela = new Janela();
 		tela = new Tela();
@@ -34,7 +33,7 @@ public class Principal implements Runnable {
 		new Thread(this).start();
 	}
 
-	public void init() {
+	private void init() {
 		tela.init(relogio);
 		janela.init(tela, "Smart Clock");
 		listener.init(janela);
@@ -44,7 +43,7 @@ public class Principal implements Runnable {
 		
 	}
 	
-	public void update() {
+	private void update() {
 		relogio.update();
 		updateVariator();
 		Menu.update();
@@ -68,8 +67,7 @@ public class Principal implements Runnable {
 		long timer = System.currentTimeMillis();
 		int tick = 0;
 
-		while (rodando) {
-			
+		while (true) {
 			timeOld = System.nanoTime();
 			
 			update();
@@ -79,10 +77,8 @@ public class Principal implements Runnable {
 			tickTotal++;
 			
 			if (System.currentTimeMillis() - timer >= 1000) {
-
 				System.out.println("TPS: " + tick);
-				
-				
+
 				tick = 0;
 				timer = System.currentTimeMillis();
 			}
