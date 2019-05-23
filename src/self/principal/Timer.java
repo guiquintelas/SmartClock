@@ -4,6 +4,7 @@ import java.awt.Toolkit;
 import java.io.IOException;
 
 import self.especial.Especial;
+import self.menu.Menu;
 
 public class Timer {
 	private int horas = 0;
@@ -36,6 +37,9 @@ public class Timer {
 		segT = s;
 
 		funcao = DESLIGAR;
+		funcaoT = DESLIGAR;
+
+		Menu.updateCheckboxes();
 	}
 	
 	int getHoras() {
@@ -170,3 +174,4 @@ public class Timer {
 	
 	
 }
+
