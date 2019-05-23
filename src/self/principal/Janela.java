@@ -15,6 +15,7 @@ import self.especial.Especial;
 import self.input.KeyListener;
 import self.input.ListenerManager;
 import self.input.MouseListener;
+import self.input.Preset;
 import self.menu.Menu;
 import self.util.Util;
 import self.util.Variator;
@@ -68,7 +69,7 @@ public class Janela extends JFrame {
 		botaoMin = new HoverArea(Janela.WIDTH - 30, 0, 16, 16, 5);
 		botaoX.setOffSet(-5);
 		botaoMin.setOffSet(-5);
-		
+
 		initPresets();
 		initListener();
 		initVariator();
@@ -77,7 +78,7 @@ public class Janela extends JFrame {
 		y = yTemp = getY();
 		
 	}
-	
+
 	private void initPresets() {
 		new Preset(KeyEvent.VK_1, e -> {
 			Menu.fechar();
@@ -157,36 +158,33 @@ public class Janela extends JFrame {
 			}
 		});
 		
-		ListenerManager.addListener(ListenerManager.MOUSE_DRAG, new MouseListener() {
-			public void acao(MouseEvent e) {
-				if (Especial.rodando || mouse == null || e.getY() > Janela.HEIGHT) return;
-				setLocation(e.getXOnScreen() - (int)mouse.getX(), e.getYOnScreen() - (int)mouse.getY());
-				
-			}
+		ListenerManager.addListener(ListenerManager.MOUSE_DRAG, (MouseListener) e -> {
+			if (Especial.rodando || mouse == null || e.getY() > Janela.HEIGHT) return;
+			setLocation(e.getXOnScreen() - (int)mouse.getX(), e.getYOnScreen() - (int)mouse.getY());
+
 		});
 		
-		ListenerManager.addListener(ListenerManager.KEY_PRESSED, new KeyListener() {
-			public void acao(KeyEvent e) {
-				if (e.getKeyCode() == KeyEvent.VK_SPACE && !Especial.rodando) {
-					if (Menu.aberto) {
-						Menu.fechar();
-					} else {
-						Menu.abrir();
-					}
+		ListenerManager.addListener(ListenerManager.KEY_PRESSED, (KeyListener) e -> {
+			if (e.getKeyCode() == KeyEvent.VK_SPACE && !Especial.rodando) {
+				if (Menu.aberto) {
+					Menu.fechar();
+				} else {
+					Menu.abrir();
 				}
-				
+			}
+
 			for (Preset preset : Preset.todosPresets) {
 				preset.handle(e);
 			}
-				//top-right numpad off 9
-				if (e.getKeyCode() == 33) moverJanela(WIDTH_TELA - WIDTH - 5, 25, 50);
-				//top-left numpad off 7
-				if (e.getKeyCode() == 36) moverJanela(5, 25, 50);
-				//bottom-left numpad off 1
-				if (e.getKeyCode() == 35) moverJanela(5,HEIGHT_TELA - HEIGHT - 40, 50);
-				//bottom-right numpad off 3
-				if (e.getKeyCode() == 34) moverJanela(WIDTH_TELA - WIDTH - 5, HEIGHT_TELA - HEIGHT - 40, 50);
-			}
+
+			//top-right numpad off 9
+			if (e.getKeyCode() == 33) moverJanelaTR();
+			//top-left numpad off 7
+			if (e.getKeyCode() == 36) moverJanelaTL();
+			//bottom-left numpad off 1
+			if (e.getKeyCode() == 35) moverJanelaBL();
+			//bottom-right numpad off 3
+			if (e.getKeyCode() == 34) moverJanelaBR();
 		});
 		
 		ListenerManager.addListener(ListenerManager.MOUSE_CLICKED, new MouseListener() {
@@ -197,22 +195,22 @@ public class Janela extends JFrame {
 				if (Principal.tickTotal <= doubleClick + 10 && e.getButton() == 1 && !Menu.aberto) {
 					if (e.getX() < Janela.WIDTH/2 && e.getY() < Janela.HEIGHT/2) {
 						//System.out.println("top left");
-						moverJanela(5, 25, 50);
+						moverJanelaTL();
 					}
 					
 					if (e.getX() >= Janela.WIDTH/2 && e.getY() < Janela.HEIGHT/2) {
 						//System.out.println("top right");
-						moverJanela(WIDTH_TELA - WIDTH - 5, 25, 50);
+						moverJanelaTR();
 					}
 					
 					if (e.getX() < Janela.WIDTH/2 && e.getY() >= Janela.HEIGHT/2 && e.getY() < Janela.HEIGHT) {
 						//System.out.println("botton left");
-						moverJanela(5,HEIGHT_TELA - HEIGHT - 40, 50);
+						moverJanelaBL();
 					}
 					
 					if (e.getX() >= Janela.WIDTH/2 && e.getY() >= Janela.HEIGHT/2 && e.getY() < Janela.HEIGHT) {
 						//System.out.println("botton right");
-						moverJanela(WIDTH_TELA - WIDTH - 5, HEIGHT_TELA - HEIGHT - 40, 50);
+						moverJanelaBR();
 					}
 				}
 				
@@ -221,7 +219,23 @@ public class Janela extends JFrame {
 			}
 		});
 	}
-	
+
+	public static void moverJanelaTL(){
+		moverJanela(5, 25, 50);
+	}
+
+	public static void moverJanelaTR(){
+		moverJanela(WIDTH_TELA - WIDTH - 5, 25, 50);
+	}
+
+	public static void moverJanelaBL(){
+		moverJanela(5,HEIGHT_TELA - HEIGHT - 40, 50);
+	}
+
+	public static void moverJanelaBR(){
+		moverJanela(WIDTH_TELA - WIDTH - 5, HEIGHT_TELA - HEIGHT - 40, 50);
+	}
+
 	public static void moverJanela(int x, int y, int tickDelay) {
 		varX.clearFila();
 		varX.variar(false);

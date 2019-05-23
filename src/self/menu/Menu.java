@@ -95,11 +95,8 @@ public class Menu {
 	private static final BufferedImage imgPause = Util.carregarImg("/imgs/pause.png");
 
 	public static void init() {
-		Timer timer1 = new Timer(0, 22, 0);
-		Timer timer2 = new Timer();
-
-		timers.put(1, timer1);
-		timers.put(2, timer2);
+		timers.put(1,  new Timer());
+		timers.put(2,  new Timer());
 
 		timeCellHoras = new TimeCell(Janela.WIDTH - widthTimeCell * 3 - Tela.BORDA - div * 3, Janela.HEIGHT + Janela.MENU_HEIGHT - heightTimeCell - Tela.BORDA - div, 30, heightTimeCell, TimeCell.HORAS);
 		timeCellMin = new TimeCell(Janela.WIDTH - widthTimeCell * 2 - Tela.BORDA - div * 2, Janela.HEIGHT + Janela.MENU_HEIGHT - heightTimeCell - Tela.BORDA - div, 30, heightTimeCell, TimeCell.MINUTOS);
@@ -138,7 +135,7 @@ public class Menu {
 
 		initListener();
 		initVariator();
-
+		updateCheckboxes();
 	}
 	
 	private static void initCheckBox() {
@@ -155,11 +152,9 @@ public class Menu {
 		checkBoxes.add(suspender);
 		checkBoxes.add(reiniciar);
 		checkBoxes.add(desligar);
-		
-		setCheckboxes();
 	}
 	
-	private static void setCheckboxes() {
+	public static void updateCheckboxes() {
 		for (CheckBox checkBox : checkBoxes) {
 			checkBox.setCheck(false);
 		}
@@ -229,10 +224,8 @@ public class Menu {
 					if (timerSel != 1) {
 						timers.get(timerSel).cancelar();
 						timerSel = 1;
-
-						setCheckboxes();
+						updateCheckboxes();
 					}
-
 					return;
 				}
 			}
@@ -242,8 +235,7 @@ public class Menu {
 					if (timerSel != 2) {
 						timers.get(timerSel).cancelar();
 						timerSel = 2;
-
-						setCheckboxes();
+						updateCheckboxes();
 					}
 				}
 			}

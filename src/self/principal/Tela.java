@@ -15,7 +15,6 @@ import javax.swing.JPanel;
 import self.GUI.HoverArea;
 import self.especial.Especial;
 import self.menu.Menu;
-import self.util.ActionQueue;
 import self.util.Util;
 import self.util.Variator;
 import self.util.VariatorNumero;
@@ -71,22 +70,18 @@ public class Tela extends JPanel {
 
 		alphaVar.fadeInSin(0, 1, 35);
 		alphaVar.variar(true);
-		alphaVar.addAcaoNaFila(new ActionQueue() {
-			public boolean action() {
-				aniInit = false;
-				aniInitTempo = true;
-				alpha = 0;
-				alphaVar.fadeInSin(0, 1, 100);
-				alphaVar.variar(true);
-				return true;
-			}
+		alphaVar.addAcaoNaFila(() -> {
+			aniInit = false;
+			aniInitTempo = true;
+			alpha = 0;
+			alphaVar.fadeInSin(0, 1, 100);
+			alphaVar.variar(true);
+			return true;
 		});
 
-		alphaVar.addAcaoNaFila(new ActionQueue() {
-			public boolean action() {
-				aniInitTempo = false;
-				return true;
-			}
+		alphaVar.addAcaoNaFila(() -> {
+			aniInitTempo = false;
+			return true;
 		});
 	}
 
