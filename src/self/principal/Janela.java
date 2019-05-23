@@ -69,6 +69,7 @@ public class Janela extends JFrame {
 		botaoX.setOffSet(-5);
 		botaoMin.setOffSet(-5);
 		
+		initPresets();
 		initListener();
 		initVariator();
 		
@@ -77,6 +78,14 @@ public class Janela extends JFrame {
 		
 	}
 	
+	private void initPresets() {
+		new Preset(KeyEvent.VK_1, e -> {
+			Menu.fechar();
+			Menu.timers.put(1, new Timer(0, 22, 0));
+			moverJanelaTR();
+		});
+	}
+
 	private void initVariator() {
 		varX = new Variator(new VariatorNumero() {
 			public void setNumero(double numero) {
@@ -166,6 +175,9 @@ public class Janela extends JFrame {
 					}
 				}
 				
+			for (Preset preset : Preset.todosPresets) {
+				preset.handle(e);
+			}
 				//top-right numpad off 9
 				if (e.getKeyCode() == 33) moverJanela(WIDTH_TELA - WIDTH - 5, 25, 50);
 				//top-left numpad off 7
