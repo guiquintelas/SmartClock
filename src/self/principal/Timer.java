@@ -38,8 +38,6 @@ public class Timer {
 
 		funcao = DESLIGAR;
 		funcaoT = DESLIGAR;
-
-		Menu.updateCheckboxes();
 	}
 	
 	int getHoras() {

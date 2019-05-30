@@ -255,6 +255,8 @@ public class Menu {
 
 		aberto = true;
 
+		updateCheckboxes();
+
 		int espera = (int) ((Janela.MENU_HEIGHT - height) / DELAY_MENU);
 
 		System.out.println("Começou a abrir");
