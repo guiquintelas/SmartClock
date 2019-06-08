@@ -28,7 +28,7 @@ public class Timer {
 		
 	}
 	
-	public Timer(int h, int m, int s) {
+	public Timer(int h, int m, int s, int funcao) {
 		horas = h;
 		horasT = h;
 		min = m;
@@ -36,8 +36,8 @@ public class Timer {
 		seg = s;
 		segT = s;
 
-		funcao = DESLIGAR;
-		funcaoT = DESLIGAR;
+		this.funcao = funcao;
+		this.funcaoT = funcao;
 	}
 	
 	int getHoras() {

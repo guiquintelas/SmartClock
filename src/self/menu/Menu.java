@@ -120,13 +120,7 @@ public class Menu {
 		botaoOk.setAtivo(false);
 
 		botaoStop = new Botao(botaoSync.getX() + botaoSync.getWidth() + 6, botaoSync.getY(), 40, botaoSync.getHeight(), botaoSync.getCorBorda(), botaoSync.getCorFundo(), "", 9, e -> {
-			Principal.relogio.stopGo();
-
-			if (Principal.relogio.isParado()) {
-				botaoStop.setImg(imgPlay);
-			} else {
-				botaoStop.setImg(imgPause);
-			}
+			stopGo();
 		});
 		botaoStop.setImg(imgPause);
 		
@@ -248,6 +242,16 @@ public class Menu {
 			}
 
 		});
+	}
+
+	public static void stopGo() {
+		Principal.relogio.stopGo();
+
+		if (Principal.relogio.isParado()) {
+			botaoStop.setImg(imgPlay);
+		} else {
+			botaoStop.setImg(imgPause);
+		}
 	}
 
 	public static void abrir() {

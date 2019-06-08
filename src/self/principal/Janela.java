@@ -81,10 +81,15 @@ public class Janela extends JFrame {
 
 	private void initPresets() {
 		new Preset(KeyEvent.VK_1, e -> {
-			Menu.fechar();
-			Menu.timers.put(1, new Timer(0, 22, 0));
+			Menu.timers.put(1, new Timer(0, 22, 0, Timer.DESLIGAR));
 			Menu.updateCheckboxes();
+
+			if (Principal.relogio.isParado()) {
+				Menu.stopGo();
+			}
+
 			moverJanelaTR();
+			Menu.fechar();
 		});
 	}
 
