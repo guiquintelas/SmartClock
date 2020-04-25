@@ -6,7 +6,6 @@ just setup a timer to do the boring stuff.
 
 ![Demo](static/smart_clock.gif)
 
---- 
 
 ## Controls:
  - **Right Mouse Button**: Open/Close Menu
