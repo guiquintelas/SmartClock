@@ -263,7 +263,7 @@ public class Menu {
 
 		int espera = (int) ((Janela.MENU_HEIGHT - height) / DELAY_MENU);
 
-		System.out.println("Começou a abrir");
+		System.out.println("ComeÃ§ou a abrir");
 		sizeVar.variar(false);
 		sizeVar.clearFila();
 		sizeVar.fadeInSin(height, Janela.MENU_HEIGHT, espera);
@@ -289,7 +289,7 @@ public class Menu {
 
 		int espera = (int) (height / DELAY_MENU);
 
-		System.out.println("Começou a fechar");
+		System.out.println("ComeÃ§ou a fechar");
 		sizeVar.variar(false);
 		sizeVar.clearFila();
 		sizeVar.fadeOutSin(height, 0, espera);
@@ -344,7 +344,7 @@ public class Menu {
 
 		if (alpha != 1) g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1));
 
-		//limpa a parte q nao aparece na animação de abre e fecha
+		//limpa a parte q nao aparece na animaÃ§Ã§o de abre e fecha
 		Composite comp = g.getComposite();
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, menuHeight + Janela.HEIGHT, Janela.WIDTH, Janela.HEIGHT + Janela.MENU_HEIGHT - menuHeight);

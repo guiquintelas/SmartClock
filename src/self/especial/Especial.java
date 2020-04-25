@@ -75,7 +75,7 @@ public class Especial {
 	
 	private static void moverJanela() {
 		if (posJanela == POS_ERRADA && !Janela.isMovendo() && !Menu.aberto) {
-			System.out.println("Começou a mover");
+			System.out.println("ComeÃ§ou a mover");
 			Janela.moverJanela(Janela.WIDTH_TELA/2 - Janela.WIDTH/2, Janela.HEIGHT_TELA/2 - Janela.HEIGHT/2, 100);
 			posJanela = POS_MOVENDO;
 		}

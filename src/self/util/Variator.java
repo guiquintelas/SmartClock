@@ -56,7 +56,7 @@ public class Variator {
 		if (ticks == 0) {
 			isFadeIn = false;
 			numero.setNumero(max);
-		//	executarA�ao();
+		//	executarAçao();
 			return;
 		}
 		numero.setNumero(inicio);
@@ -71,7 +71,7 @@ public class Variator {
 		if (ticks == 0) {
 			isFadeIn = false;
 			numero.setNumero(max);
-			//executarA�ao();
+			//executarAçao();
 			return;
 		}
 		numero.setNumero(inicio);
