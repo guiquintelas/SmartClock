@@ -8,11 +8,11 @@ just setup a timer to do the boring stuff.
 
 --- 
 
-##Controls:
+## Controls:
  - **Right Mouse Button**: Open/Close Menu
  - **Left Mouse Button**: Move SmartClock to edges of the screen, depending on the click location 
  
- ##Features
+ ## Features
   - **SYNC**: Synchronize with computer clock
   - **Play/Pause**: Comon Sense ;P
   - **RESET**: Resets clock to 00:00:00
