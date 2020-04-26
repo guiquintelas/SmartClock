@@ -6,7 +6,13 @@ just setup a timer to do the boring stuff.
 
 ![Demo](static/smart_clock.gif)
 
---- 
+
+## Usage
+```
+git clone https://github.com/guiquintelas/smart-clock.git
+cd smart-clock
+java -jar SmartClock.jar
+```
 
 ## Controls:
  - **Right Mouse Button**: Open/Close Menu
