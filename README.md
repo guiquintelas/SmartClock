@@ -1,6 +1,6 @@
 # SmartClock
 
-Enough of getting up from bed at 2 o'clock to shut down your computer, 
+Enough of getting up from bed at 2 o'clock in the morning to shut down your computer, 
 just setup a timer to do the boring stuff.
 
 
